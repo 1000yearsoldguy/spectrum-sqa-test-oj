@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Software Testing and Quality Assurance Report</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #E2E8F0;
+      /* slate-200 */
+    }
+
+    .chart-container {
+      position: relative;
+      width: 100%;
+      height: 40vh;
+      max-height: 400px;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+    }
+
+    .filter-btn {
+      transition: all 0.2s;
+    }
+
+    .filter-btn.active {
+      background-color: #C026D3;
+      /* fuchsia-600 */
+      color: white;
+      box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-in-out;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background-color: white;
+      border-radius: 0.75rem;
+      padding: 2rem;
+      max-width: 90%;
+      width: 500px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #64748B;
+      /* slate-500 */
+      transition: color 0.2s;
+    }
+
+    .close-btn:hover {
+      color: #1E293B;
+      /* slate-900 */
+    }
+
+    #backToTopBtn {
+      display: none;
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 99;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 9999px;
+      background-color: #C026D3;
+      /* fuchsia-600 */
+      color: white;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      cursor: pointer;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+  </style>
+</head>
+
+<body class="text-slate-800">
+
+  <main class="container mx-auto p-4 sm:p-6 lg:p-8">
+
+    <section id="cover" class="h-screen flex items-center justify-center text-center">
+      <div class="max-w-4xl mx-auto">
+        <h1 class="text-5xl md:text-6xl font-extrabold text-slate-900 mb-6">Software Testing and Quality Assurance</h1>
+        <h2 class="text-2xl md:text-3xl font-semibold text-slate-700 mb-10">Assignment - 1</h2>
+        <div class="space-y-4 text-left inline-block max-w-lg">
+          <p class="text-lg text-slate-600 leading-relaxed"><span class="font-medium text-slate-800">Submitted
+              to:</span><br>Mobaswirul Islam, Lecturer</p>
+          <p class="text-lg text-slate-600 leading-relaxed"><span class="font-medium text-slate-800">Submitted
+              by:</span><br><span class="font-bold text-slate-800">Group Name:</span> Spectrum</p>
+          <p class="text-base text-slate-500 leading-relaxed">Md. Golam Mahmud (Nafiz) - 011201333<br>Anika Tabassum
+            Orchi - 011201346<br>Anindita Chakma - 011201284<br>Sabrina Zaman - 011212137<br>Safrin Sanzida Islam -
+            011212124</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="dashboard" class="mb-16">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl">Testing Dashboard</h2>
+        <p class="mt-4 text-lg leading-6 text-slate-600">A high-level overview of the API testing cycle for the Online
+          Coding Judge.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 text-center">
+        <div class="card p-6">
+          <p class="text-5xl font-extrabold text-fuchsia-600">76</p>
+          <p class="text-base font-medium text-slate-500 mt-2">Total Test Cases</p>
+        </div>
+        <div class="card p-6">
+          <p class="text-5xl font-extrabold text-rose-500">18</p>
+          <p class="text-base font-medium text-slate-500 mt-2">Defects Identified</p>
+        </div>
+        <div class="card p-6">
+          <p class="text-5xl font-extrabold text-emerald-600">76.3%</p>
+          <p class="text-base font-medium text-slate-500 mt-2">Overall Pass Rate</p>
+        </div>
+      </div>
+
+      <div class="card p-6">
+        <h3 class="text-lg font-semibold text-slate-800 text-center mb-4">Test Case Outcomes</h3>
+        <div class="chart-container max-w-md mx-auto">
+          <canvas id="summaryChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section id="defects" class="mb-16">
+      <div class="card overflow-hidden bg-rose-50">
+        <button class="accordion-header w-full text-left p-4 flex justify-center items-center">
+          <h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl mr-4">Defect Analysis</h2>
+          <svg class="w-8 h-8 transform transition-transform duration-300" fill="none" stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+        <div class="accordion-content">
+          <div class="p-6 pt-0">
+            <p class="text-lg leading-6 text-slate-600 mb-8 text-center">An interactive breakdown of the 18 defects
+              discovered during testing.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+              <div class="lg:col-span-2 card p-6">
+                <h3 class="text-lg font-semibold text-slate-800 text-center mb-4">Defects by API Category</h3>
+                <div class="chart-container">
+                  <canvas id="defectCategoryChart"></canvas>
+                </div>
+              </div>
+              <div class="lg:col-span-3 card p-6">
+                <h3 class="text-lg font-semibold text-slate-800 mb-4">Detailed Defect Log</h3>
+                <p class="text-sm text-slate-600 mb-4">Use the filters to explore defects within each API category. The
+                  data reveals key problem areas requiring immediate attention.</p>
+                <div id="defect-filters" class="flex flex-wrap gap-2 mb-4">
+                  <button
+                    class="filter-btn active px-4 py-2 text-sm font-medium rounded-full bg-slate-200 text-slate-700"
+                    data-category="All">All</button>
+                  <button class="filter-btn px-4 py-2 text-sm font-medium rounded-full bg-slate-200 text-slate-700"
+                    data-category="Problems and Submissions">Submissions</button>
+                  <button class="filter-btn px-4 py-2 text-sm font-medium rounded-full bg-slate-200 text-slate-700"
+                    data-category="Contest Management">Contests</button>
+                  <button class="filter-btn px-4 py-2 text-sm font-medium rounded-full bg-slate-200 text-slate-700"
+                    data-category="Authentication and User Management">Users & Auth</button>
+                </div>
+                <div id="defect-list" class="space-y-3 pr-2 max-h-96 overflow-y-auto">
+                  <!-- Defects will be dynamically inserted here -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="vulnerabilities" class="mb-16">
+      <div class="card overflow-hidden bg-amber-50">
+        <button class="accordion-header w-full text-left p-4 flex justify-center items-center">
+          <h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl mr-4">Key Security Vulnerabilities</h2>
+          <svg class="w-8 h-8 transform transition-transform duration-300" fill="none" stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+        <div class="accordion-content">
+          <div class="p-6 pt-0">
+            <p class="text-lg leading-6 text-slate-600 mb-8 text-center">Critical security weaknesses identified that
+              require immediate remediation.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="card p-6 border-l-4 border-amber-600">
+                <h3 class="text-lg font-semibold text-slate-800 mb-2">Lack of Input Validation</h3>
+                <p class="text-slate-600">The API does not properly validate submission size or content. This could be
+                  exploited for resource exhaustion (DoS) attacks or allow cross-site scripting (XSS) via malicious
+                  problem descriptions.</p>
+              </div>
+              <div class="card p-6 border-l-4 border-amber-600">
+                <h3 class="text-lg font-semibold text-slate-800 mb-2">Insecure Authentication</h3>
+                <p class="text-slate-600">The absence of rate limiting, account lockout policies, and password
+                  complexity rules makes the system vulnerable to automated brute-force attacks and credential stuffing.
+                </p>
+              </div>
+              <div class="card p-6 border-l-4 border-amber-600">
+                <h3 class="text-lg font-semibold text-slate-800 mb-2">Insufficient Session Management</h3>
+                <p class="text-slate-600">No token blocklist is implemented. Stolen JWTs remain valid until expiry even
+                  after logout, posing a significant risk of unauthorized account access.</p>
+              </div>
+              <div class="card p-6 border-l-4 border-amber-600">
+                <h3 class="text-lg font-semibold text-slate-800 mb-2">Weak Access Control</h3>
+                <p class="text-slate-600">The principle of least privilege is not consistently applied. Several
+                  admin-only endpoints lack proper restrictions, and a "default to deny" policy is not enforced across
+                  the API.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="recommendations" class="mb-16">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl">Actionable Recommendations</h2>
+        <p class="mt-4 text-lg leading-6 text-slate-600">A prioritized list of actions to address identified defects and
+          vulnerabilities.</p>
+      </div>
+      <div class="max-w-3xl mx-auto space-y-4" id="accordion-container">
+        <!-- Accordion items will be dynamically inserted here -->
+      </div>
+    </section>
+
+    <section id="thankyou" class="h-screen flex items-center justify-center text-center">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-5xl md:text-6xl font-extrabold text-slate-900 mb-6">Thank You</h2>
+        <p class="text-2xl md:text-3xl font-semibold text-slate-700 mb-4">for your time and consideration.</p>
+        <p class="text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto">This concludes the report on the API testing
+          cycle for the Online Coding Judge. We are committed to ensuring the highest quality and security standards for
+          this product.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal for defect details -->
+  <div id="defectModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h3 class="text-2xl font-bold text-slate-900 mb-4">Defect Details</h3>
+      <p id="modalCategory" class="text-sm font-semibold text-fuchsia-600 mb-2"></p>
+      <p id="modalDescription" class="text-base text-slate-700 leading-relaxed"></p>
+    </div>
+  </div>
+
+  <!-- Back to top button -->
+  <button id="backToTopBtn" title="Go to top">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 m-auto" fill="none" viewBox="0 0 24 24"
+      stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+    </svg>
+  </button>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const defectData = [
+        { category: 'Authentication and User Management', description: 'Failure to show expected errors for non-existent users (e.g., searching for user ID > 2).' },
+        { category: 'Authentication and User Management', description: 'Incorrect status codes returned on login attempts with invalid credentials.' },
+        { category: 'Authentication and User Management', description: 'PUT /users/:id does not return 404 for non-existent user.' },
+        { category: 'Authentication and User Management', description: 'GET /users/:id/submissions does not show output properly.' },
+        { category: 'Authentication and User Management', description: 'Login does not differentiate between bad password and non-existent user.' },
+        { category: 'Contest Management', description: 'Setter cannot set problems for a finished contest, which may be an intended feature but is noted.' },
+        { category: 'Contest Management', description: 'Incorrect status code (400 instead of 403) when a user attempts to join a contest they created.' },
+        { category: 'Contest Management', description: 'Incorrect output messages on participant lists; message not showing.' },
+        { category: 'Contest Management', description: 'POST /contests/:id/join returns 400 when contestId in body differs from URL.' },
+        { category: 'Contest Management', description: 'GET /contests/:id/participation/:userId does not show message output.' },
+        { category: 'Contest Management', description: 'GET /contests/:id/problems lacks proper error for non-existent contest ID.' },
+        { category: 'Problems and Submissions', description: 'Failure to handle invalid input properly across various submission endpoints.' },
+        { category: 'Problems and Submissions', description: 'Incorrect status codes and error messages for invalid submissions.' },
+        { category: 'Problems and Submissions', description: 'Lack of proper output formatting for submission details.' },
+        { category: 'Problems and Submissions', description: 'GET /problems/:id/submissions returns 404 on non-existent problem ID.' },
+        { category: 'Problems and Submissions', description: 'GET /submissions/:id returns 404 for non-existent submission, but should be handled gracefully.' },
+        { category: 'Problems and Submissions', description: 'GET /submissions returns invalid output for language and verdict fields.' },
+        { category: 'Problems and Submissions', description: 'POST /problems/:id/submit lacks validation for submission content.' }
+      ];
+
+      const recommendationData = [
+        { title: '1. Implement Strict Input Validation', content: 'Enforce tight resource limits on submission sizes and content types. Sanitize all user-provided input, especially in problem descriptions and source code submissions, to prevent injection attacks (XSS, etc.).' },
+        { title: '2. Secure Authentication & Registration', content: 'Introduce stringent rate limiting on login and registration endpoints. Implement account lockout procedures after multiple failed attempts and enforce strong password complexity requirements.' },
+        { title: '3. Enhance JWT & Session Management', content: 'Implement a token blocklist (e.g., using Redis) to manage sessions. Add JWT identifiers to this list upon user logout or password change to immediately invalidate them.' },
+        { title: '4. Strengthen Access Control', content: 'Apply the principle of least privilege rigorously. Ensure admin-only endpoints are properly restricted. Implement a "default to deny" access control policy for all API resources.' },
+        { title: '5. Review and Fix All 18 Defects', content: 'Schedule development sprints to systematically address each of the 18 identified functional defects, prioritizing them based on severity and user impact.' }
+      ];
+
+      const tooltipTitleCallback = (tooltipItems) => {
+        const item = tooltipItems[0];
+        let label = item.chart.data.labels[item.dataIndex];
+        if (Array.isArray(label)) {
+          return label.join(' ');
+        }
+        return label;
+      };
+
+      const summaryCtx = document.getElementById('summaryChart').getContext('2d');
+      new Chart(summaryCtx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Tests Passed (58)', 'Defects Found (18)'],
+          datasets: [{
+            data: [58, 18],
+            backgroundColor: ['#10B981', '#F43F5E'], /* emerald-500, rose-500 */
+            borderColor: '#E2E8F0',
+            borderWidth: 4,
+            hoverOffset: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '70%',
+          plugins: {
+            legend: { position: 'bottom' },
+            tooltip: { callbacks: { title: tooltipTitleCallback } }
+          }
+        }
+      });
+
+      const defectCategoryCtx = document.getElementById('defectCategoryChart').getContext('2d');
+      new Chart(defectCategoryCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Problems and Submissions', 'Contest Management', 'Authentication and User Management'],
+          datasets: [{
+            label: 'Number of Defects',
+            data: [7, 6, 5],
+            backgroundColor: ['#F43F5E', '#F97316', '#EAB308'], /* rose, orange, amber */
+            borderRadius: 4
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { beginAtZero: true, grid: { display: false } },
+            y: { grid: { display: false } }
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: { title: tooltipTitleCallback } }
+          }
+        }
+      });
+
+      const defectListContainer = document.getElementById('defect-list');
+      const filterButtons = document.querySelectorAll('.filter-btn');
+
+      function renderDefects(category) {
+        defectListContainer.innerHTML = '';
+        const filteredDefects = category === 'All'
+          ? defectData
+          : defectData.filter(d => d.category === category);
+
+        if (filteredDefects.length === 0) {
+          defectListContainer.innerHTML = `<p class="text-slate-500 italic">No defects found in this category.</p>`;
+          return;
+        }
+
+        filteredDefects.forEach(defect => {
+          const defectElement = document.createElement('div');
+          defectElement.className = 'p-3 bg-slate-50 rounded-md border border-slate-200 cursor-pointer hover:bg-slate-100 transition-colors';
+          defectElement.innerHTML = `
+                        <p class="text-sm font-medium text-slate-800">${defect.description}</p>
+                    `;
+          defectElement.dataset.category = defect.category;
+          defectElement.dataset.description = defect.description;
+          defectListContainer.appendChild(defectElement);
+        });
+      }
+
+      filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          filterButtons.forEach(btn => btn.classList.remove('active'));
+          button.classList.add('active');
+          renderDefects(button.dataset.category);
+        });
+      });
+
+      renderDefects('All');
+
+      const accordionContainer = document.getElementById('accordion-container');
+      recommendationData.forEach((item, index) => {
+        const accordionItem = document.createElement('div');
+        accordionItem.className = 'card overflow-hidden';
+        accordionItem.innerHTML = `
+                    <button class="accordion-header w-full text-left p-4 flex justify-between items-center">
+                        <span class="font-semibold text-slate-800">${item.title}</span>
+                        <svg class="w-5 h-5 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="p-4 pt-0 text-slate-600">
+                            <p>${item.content}</p>
+                        </div>
+                    </div>
+                `;
+        accordionContainer.appendChild(accordionItem);
+      });
+
+      // Replaced old logic with a single, consistent accordion handler
+      const collapsibleHeaders = document.querySelectorAll('.accordion-header');
+      collapsibleHeaders.forEach(header => {
+        header.addEventListener('click', () => {
+          const content = header.nextElementSibling;
+          const icon = header.querySelector('svg');
+
+          if (content.style.maxHeight) {
+            content.style.maxHeight = null;
+            icon.classList.remove('rotate-180');
+          } else {
+            content.style.maxHeight = content.scrollHeight + "px";
+            icon.classList.add('rotate-180');
+          }
+        });
+      });
+
+      // Modal logic
+      const modal = document.getElementById('defectModal');
+      const modalCategory = document.getElementById('modalCategory');
+      const modalDescription = document.getElementById('modalDescription');
+      const closeBtn = document.querySelector('.close-btn');
+
+      defectListContainer.addEventListener('click', (event) => {
+        const card = event.target.closest('.p-3');
+        if (card) {
+          modalCategory.textContent = card.dataset.category;
+          modalDescription.textContent = card.dataset.description;
+          modal.style.display = 'flex';
+        }
+      });
+
+      closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+      });
+
+      window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+          modal.style.display = 'none';
+        }
+      });
+
+      // Back to top button logic
+      const backToTopBtn = document.getElementById("backToTopBtn");
+      window.onscroll = function () {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 200) {
+          backToTopBtn.style.display = "block";
+        } else {
+          backToTopBtn.style.display = "none";
+        }
+      };
+      backToTopBtn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+
+</html>
